@@ -105,14 +105,14 @@ uploadbase(){
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
 	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 46-73)" && clear 
-	echo -e "$upload_link - Ссылка на скачивание Базы OpenVPN
-База OpenVPN успешно выгружена!"
+	echo -e "${Red} $upload_link${Font_color_suffix} - ${Green}Ссылка на скачивание Базы OpenVPN
+ База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
 }
 dwnlndbase(){
-		echo -e "${Green_font_prefix} Загрузить Базу OpenVPN по ссылке? ВНИМАНИЕ: ПРОДОЛЖЕНИЕ ПРИВЕДЕТ К ПЕРЕЗАПИСИ УСТАНОВЛЕННОЙ БАЗЫ OPENVPN!${Font_color_suffix}(y/n)"
+		echo -e "${Green}Загрузить Базу OpenVPN по ссылке?${Font_color_suffix}${Red} ВНИМАНИЕ: ПРОДОЛЖЕНИЕ ПРИВЕДЕТ К ПЕРЕЗАПИСИ УСТАНОВЛЕННОЙ БАЗЫ OPENVPN!${Font_color_suffix}${Green}(y/n)"
 	read -e -p "(По умолчанию: отмена):" base_override
-	[[ -z "${base_override}" ]] && echo "Отмена..." && exit 1
+	[[ -z "${base_override}" ]] && echo "Отмена...${Font_color_suffix}" && exit 1
 	if [[ ${base_override} == "y" ]]; then
 		read -e -p "Введите ссылку на базу:(Если вы ее не сделали, то введите 'n')" base_link
 		[[ -z "${base_link}" ]] && echo "Отмена..." && exit 1
