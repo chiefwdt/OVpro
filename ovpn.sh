@@ -94,7 +94,7 @@ adduser(){
 	echo "-------------------------"
 	echo "----------------"
 	echo "---------"
-	echo -e " $linktofile - Ссылка на OpenVPN ключ $client"
+	echo -e "${Red} $linktofile${Font_color_suffix} - ${Green}Ссылка на OpenVPN ключ $client${Font_color_suffix}"
 	echo "---------"
 	echo "----------------"
 	echo "-------------------------"
@@ -260,7 +260,7 @@ showlink(){
 		echo
 		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 46-73)"
 		clear
-		echo -e " $linktofile - Ссылка  на ключ $client" && echo
+		echo -e "${Red} $linktofile${Font_color_suffix} - ${Green}Ссылка на ключ $client${Font_color_suffix}" && echo
 		read -e -p "Хотите продолжить вывод ссылок на ключи?[Y/n]:" delyn
 		[[ -z ${delyn} ]] && delyn="y"
 		if [[ ${delyn} == [Nn] ]]; then
