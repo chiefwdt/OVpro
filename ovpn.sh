@@ -83,7 +83,7 @@ adduser(){
 		read -p "Имя: " unsanitized_client
 		client=$(sed 's/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_/g' <<< "$unsanitized_client")
 	done
-	client=$(echo "${client}_$(date +"%d-%m")")	
+	client=$(echo "${client}_$(date +"%d-%m")")
 	cd /etc/openvpn/server/easy-rsa/
 	EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full "$client" nopass
 	# Generates the custom client.ovpn
@@ -104,7 +104,7 @@ uploadbase(){
 	echo -e "Выгрузка Базы OpenVPN в облако..." && echo
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
-	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 46-73)" && clear 
+	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 46-73)" && clear
 	echo -e "${Red} $upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
  База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
@@ -114,7 +114,7 @@ dwnlndbase(){
 	read -e -p "(По умолчанию: отмена):" base_override
 	[[ -z "${base_override}" ]] && echo "Отмена...${Font_color_suffix}" && exit 1
 	if [[ ${base_override} == "y" ]]; then
-		read -e -p "Введите ссылку на базу:(Если вы ее не сделали, то введите 'n')" base_link
+		read -e -p "Введите ссылку на Базу:" base_link
 		[[ -z "${base_link}" ]] && echo "Отмена..." && exit 1
 		if [[ ${base_link} == "n" ]]; then
 			echo "Отмена..." && exit 1
@@ -224,7 +224,7 @@ deleteuser(){
 				# CRL is read with each client connection, when OpenVPN is dropped to nobody
 				chown nobody:"$group_name" /etc/openvpn/server/crl.pem
 				echo
-				rm "/root/$client.ovpn" 
+				rm "/root/$client.ovpn"
 				clear
 				echo "$client удален!"
 				read -e -p "Хотите продолжить удаление пользователей?[Y/n]:" delyn
@@ -350,7 +350,7 @@ checkdeletetime(){
 				echo -e "Клиент $client будет удален через $deletetime дней"
 				rm "/etc/openvpn/server/dayslast1.csv"
 			fi
-		fi 
+		fi
 }
 confautodel(){
 			number_of_clients=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
@@ -390,7 +390,7 @@ cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem
 chown nobody:"$group_name" /etc/openvpn/server/crl.pem
 echo
 rm "/root/$client.ovpn"
-sed -i "/$client,/d" /etc/openvpn/server/dayslast.csv  
+sed -i "/$client,/d" /etc/openvpn/server/dayslast.csv
 ENDMARKER
 				clear
 				echo -e "Пользователь ${Blue_font_prefix}$client${Font_color_suffix} будет удален через $periodofdel дней"
@@ -476,10 +476,10 @@ if [[ ! -e /etc/openvpn/server/server.conf ]]; then
 		read -p "Протокол [По умолчанию: UDP]: " protocol
 	done
 	case "$protocol" in
-		1|"") 
+		1|"")
 		protocol=udp
 		;;
-		2) 
+		2)
 		protocol=tcp
 		;;
 	esac
@@ -747,29 +747,29 @@ else
 	number_of_active=$(cat /var/log/openvpn/openvpn-status.log | grep CLIENT_LIST | tail -n +2 | grep -c CLIENT_LIST)
 	clear
 	echo
-	echo  -e "${Red}Chieftain && xyl1gun4eg && VeroN [OVpro Control]${Font_color_suffix} "
+	echo  -e "${Morg}${Blue}Chieftain && xyl1gun4eg && VeroN [OVpro Control]${Font_color_suffix} "
 	echo
-echo -e "Приветствую, администратор сервера!  Дата: $(date +"%d-%m-%Y")
-Всего ключей на сервере:"$number_of_clients
-echo -e "Всего подключенных пользователей:" $number_of_active
+echo -e "Приветствую, администратор сервера! Дата: ${Blue}$(date +"%d-%m-%Y")${Font_color_suffix}
+Всего ключей на сервере:" ${Blue}$number_of_clients${Font_color_suffix}
+echo -e "Всего подключенных пользователей:" ${Blue}$number_of_active${Font_color_suffix}
   echo -e "
-IP сервера: $serverip123
-${Ocean}|————————————————————————————————————|${Font_color_suffix}
-|${Ocean}————————${Font_color_suffix} Управление ключами ${Ocean}————————${Font_color_suffix}|
-|${Ocean}1.${Font_color_suffix} ${Yellow}Создать ключ${Font_color_suffix}                     |
-|${Ocean}2.${Font_color_suffix} ${Yellow}Удалить ключ${Font_color_suffix}                     |
-|${Ocean}3.${Font_color_suffix} ${Yellow}Получить список клиентов${Font_color_suffix}         |
-|${Ocean}4.${Font_color_suffix} ${Yellow}Получить ссылки на ключи${Font_color_suffix}         |
-|${Ocean}————————${Font_color_suffix} Управление базой ${Ocean}——————————${Font_color_suffix}|
-|${Ocean}5.${Font_color_suffix} ${Yellow}Выгрузить Базу${Font_color_suffix}                   |
-|${Ocean}6.${Font_color_suffix} ${Yellow}Загрузить Базу${Font_color_suffix}                   |
-|${Ocean}————————${Font_color_suffix} Управление скриптом ${Ocean}———————${Font_color_suffix}|
-|${Ocean}7.${Font_color_suffix} ${Yellow}Удалить OpenVPN${Font_color_suffix}                  |
-|${Ocean}8.${Font_color_suffix} ${Yellow}Выйти${Font_color_suffix}                            |
-|${Ocean}——————————${Font_color_suffix} Автоматизация ${Ocean}———————————${Font_color_suffix}|
-|${Ocean}9.${Font_color_suffix} ${Yellow}Просмотр дней${Font_color_suffix}                    |
-|${Ocean}10.${Font_color_suffix} ${Yellow}Настроить автоудаление${Font_color_suffix}          |
-${Ocean}|————————————————————————————————————|${Font_color_suffix}"
+IP сервера: ${Blue}$serverip123${Font_color_suffix}
+${Blue}|————————————————————————————————————|${Font_color_suffix}
+|${Blue}————————${Font_color_suffix} Управление ключами ${Blue}————————${Font_color_suffix}|
+|${Blue}1.${Font_color_suffix} ${Yellow}Создать ключ${Font_color_suffix}                     |
+|${Blue}2.${Font_color_suffix} ${Yellow}Удалить ключ${Font_color_suffix}                     |
+|${Blue}3.${Font_color_suffix} ${Yellow}Получить список клиентов${Font_color_suffix}         |
+|${Blue}4.${Font_color_suffix} ${Yellow}Получить ссылки на ключи${Font_color_suffix}         |
+|${Blue}————————${Font_color_suffix} Управление базой ${Blue}——————————${Font_color_suffix}|
+|${Blue}5.${Font_color_suffix} ${Yellow}Выгрузить Базу${Font_color_suffix}                   |
+|${Blue}6.${Font_color_suffix} ${Yellow}Загрузить Базу${Font_color_suffix}                   |
+|${Blue}————————${Font_color_suffix} Управление скриптом ${Blue}———————${Font_color_suffix}|
+|${Blue}7.${Font_color_suffix} ${Yellow}Удалить OpenVPN${Font_color_suffix}                  |
+|${Blue}8.${Font_color_suffix} ${Yellow}Выйти${Font_color_suffix}                            |
+|${Blue}——————————${Font_color_suffix} Автоматизация ${Blue}———————————${Font_color_suffix}|
+|${Blue}9.${Font_color_suffix} ${Yellow}Просмотр дней${Font_color_suffix}                    |
+|${Blue}10.${Font_color_suffix} ${Yellow}Настроить автоудаление${Font_color_suffix}          |
+${Blue}|————————————————————————————————————|${Font_color_suffix}"
 	read -p "Действие: " option
 	until [[ "$option" =~ ^[0-9]+$ ]]; do
 		echo "$option: Выбор неверный"
