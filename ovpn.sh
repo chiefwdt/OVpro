@@ -1,7 +1,7 @@
 #!/bin/bash
 # OVpro by Chieftain && xyl1gun4eg && VeroN
 
-Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m" && Green="\033[32m" && Red="\033[31m" && Yellow="\033[33m" && Blue='\033[34m' && Purple='\033[35m' && Ocean='\033[36m' && Black='\033[37m' && Morg="\033[5m" && Reverse="\033[7m" && Font="\033[1m"
+Blue_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Blue="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m" && Blue="\033[32m" && Red="\033[31m" && Yellow="\033[33m" && Blue='\033[34m' && Purple='\033[35m' && Ocean='\033[36m' && Black='\033[37m' && Morg="\033[5m" && Reverse="\033[7m" && Font="\033[1m"
 sh_ver="7.7.7"
 
 # Detect Debian users running the script with "sh" instead of bash
@@ -94,7 +94,7 @@ adduser(){
 	echo "-------------------------"
 	echo "----------------"
 	echo "---------"
-	echo -e "${Red} $linktofile${Font_color_suffix} - ${Green}Ссылка на OpenVPN ключ $client${Font_color_suffix}"
+	echo -e "${Red} $linktofile${Font_color_suffix} - ${Blue}Ссылка на OpenVPN ключ $client${Font_color_suffix}"
 	echo "---------"
 	echo "----------------"
 	echo "-------------------------"
@@ -105,12 +105,12 @@ uploadbase(){
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
 	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 46-73)" && clear 
-	echo -e "${Red} $upload_link${Font_color_suffix} - ${Green}Ссылка на скачивание Базы OpenVPN
+	echo -e "${Red} $upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
  База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
 }
 dwnlndbase(){
-		echo -e "${Green}Загрузить Базу OpenVPN по ссылке?${Font_color_suffix}${Red} ВНИМАНИЕ: ПРОДОЛЖЕНИЕ ПРИВЕДЕТ К ПЕРЕЗАПИСИ УСТАНОВЛЕННОЙ БАЗЫ OPENVPN!${Font_color_suffix}${Green}(y/n)"
+		echo -e "${Blue}Загрузить Базу OpenVPN по ссылке?${Font_color_suffix}${Red} ВНИМАНИЕ: ПРОДОЛЖЕНИЕ ПРИВЕДЕТ К ПЕРЕЗАПИСИ УСТАНОВЛЕННОЙ БАЗЫ OPENVPN!${Font_color_suffix}${Blue}(y/n)"
 	read -e -p "(По умолчанию: отмена):" base_override
 	[[ -z "${base_override}" ]] && echo "Отмена...${Font_color_suffix}" && exit 1
 	if [[ ${base_override} == "y" ]]; then
@@ -260,7 +260,7 @@ showlink(){
 		echo
 		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 46-73)"
 		clear
-		echo -e "${Red} $linktofile${Font_color_suffix} - ${Green}Ссылка на ключ $client${Font_color_suffix}" && echo
+		echo -e "${Red} $linktofile${Font_color_suffix} - ${Blue}Ссылка на ключ $client${Font_color_suffix}" && echo
 		read -e -p "Хотите продолжить вывод ссылок на ключи?[Y/n]:" delyn
 		[[ -z ${delyn} ]] && delyn="y"
 		if [[ ${delyn} == [Nn] ]]; then
@@ -393,7 +393,7 @@ rm "/root/$client.ovpn"
 sed -i "/$client,/d" /etc/openvpn/server/dayslast.csv  
 ENDMARKER
 				clear
-				echo -e "Пользователь ${Green_font_prefix}$client${Font_color_suffix} будет удален через $periodofdel дней"
+				echo -e "Пользователь ${Blue_font_prefix}$client${Font_color_suffix} будет удален через $periodofdel дней"
 				future=$(date --date="$periodofdel days" +"%b %d %Y")
 				if [[ ! -e /etc/openvpn/server/dayslast.csv ]]; then
 					echo "$client,$future" > "/etc/openvpn/server/dayslast.csv"
@@ -444,7 +444,7 @@ if [[ ! -e /etc/openvpn/server/server.conf ]]; then
 	#if $ip is a private IP address, the server must be behind NAT
 	    echo "$ip" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)';
 		echo
-		echo  -e "Введите ${Green_background_prefix}IP/Доменное имя${Font_color_suffix} сервера"
+		echo  -e "Введите ${Blue}IP/Доменное имя${Font_color_suffix} сервера"
 		# Get public IP and sanitize with grep
 		get_public_ip=$(grep -m 1 -oE '^[0-9]{1,3}(\.[0-9]{1,3}){3}$' <<< "$(wget -T 10 -t 1 -4qO- "http://ip1.dynupdate.no-ip.com/" || curl -m 10 -4Ls "http://ip1.dynupdate.no-ip.com/")")
 		read -p "Автоматическое определение IP-адреса [$get_public_ip]: " public_ip
