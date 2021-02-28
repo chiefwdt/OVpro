@@ -88,6 +88,7 @@ adduser(){
 	EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full "$client" nopass
 	# Generates the custom client.ovpn
 	new_client
+	clear
 	echo
   linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 46-73)"
 	echo "--------------------------------"
@@ -736,9 +737,6 @@ block-outside-dns
 verb 3" > /etc/openvpn/server/client-common.txt
 	# Enable and start the OpenVPN service
 	systemctl enable --now openvpn-server@server.service
-	# Generates the custom client.ovpn
-	new_client
-	echo
 	echo "Установка завершена!"
 	echo "Для добавления клиентов, перезапустите скрипт"
 else
