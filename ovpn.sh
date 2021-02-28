@@ -744,7 +744,7 @@ verb 3" > /etc/openvpn/server/client-common.txt
 else
 	serverip123="$(curl "ifconfig.me")"
 	number_of_clients=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
-	number_of_active=$(cat /var/log/openvpn/openvpn-status.log | grep CLIENT_LIST | tail -n +2 | grep -c CLIENT_LIST)
+	number_of_active=$(cat /etc/openvpn/server/openvpn-status.log | grep CLIENT_LIST | tail -n +2 | grep -c CLIENT_LIST)
 	clear
 	echo
 	echo  -e "${Morg}${Blue}Chieftain && xyl1gun4eg && VeroN [OVpro Control]${Font_color_suffix} "
