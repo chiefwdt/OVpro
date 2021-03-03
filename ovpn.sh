@@ -353,6 +353,22 @@ checkdeletetime(){
 			fi
 		fi
 }
+Create_Aliases(){
+	if ! { [[ -f ~/.bash_aliases ]] && grep -q "SSpro" ~/.bash_aliases; }; then
+		cat << EOF >> ~/.bash_aliases
+alias p='bash /root/SSpro/vpn.sh'
+alias o='bash /root/OVpro/ovpn.sh'
+EOF
+		chmod 644 ~/.bash_aliases
+	fi
+
+	if ! { [[ -f ~/.bashrc ]] && grep -q "bash_aliases" ~/.bashrc; }; then
+		cat << EOF >> ~/.bashrc
+if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases fi
+EOF
+		chmod 644 ~/.bashrc
+	fi
+}
 confautodel(){
 			number_of_clients=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
 			if [[ "$number_of_clients" = 0 ]]; then
@@ -530,6 +546,8 @@ if [[ ! -e /etc/openvpn/server/server.conf ]]; then
 LimitNPROC=infinity" > /etc/systemd/system/openvpn-server@server.service.d/disable-limitnproc.conf
 	fi
 	if [[ "$os" = "debian" || "$os" = "ubuntu" ]]; then
+	        Create_Aliases
+                source ~/.bash_aliases
 		apt-get update
 		apt-get install -y jq openvpn openssl ca-certificates $firewall
 	elif [[ "$os" = "centos" ]]; then
