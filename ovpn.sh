@@ -104,7 +104,7 @@ uploadbase(){
 	echo -e "Выгрузка Базы OpenVPN в облако..." && echo
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
-	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 135-164)" && clear
+	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 130-165)" && clear
 	echo -e "${Red} $upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
  База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
