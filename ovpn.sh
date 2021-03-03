@@ -89,7 +89,7 @@ adduser(){
 	# Generates the custom client.ovpn
 	new_client
 	echo
-  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 135-164)"
+  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 126-155)"
 	echo "--------------------------------"
 	echo "-------------------------"
 	echo "----------------"
@@ -182,7 +182,7 @@ explicit-exit-notify' >> /etc/openvpn/server/server.conf
 	fi
 }
 get_users_list(){
-	number_of_clients=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
+	number_of_s=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
 	if [[ "$number_of_clients" = 0 ]]; then
 		echo
 		echo "Клиенты отсутствуют!"
