@@ -90,7 +90,7 @@ adduser(){
 	clear
 	new_client
 	echo
-  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 130-161)"
+  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 131-161)"
 	echo "--------------------------------"
 	echo "-------------------------"
 	echo "----------------"
