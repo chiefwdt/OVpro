@@ -90,7 +90,7 @@ adduser(){
 	clear
 	new_client
 	echo
-  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io")"
+  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | jq ".link")"
 	echo "--------------------------------"
 	echo "-------------------------"
 	echo "----------------"
@@ -105,7 +105,7 @@ uploadbase(){
 	echo -e "Выгрузка Базы OpenVPN в облако..." && echo
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
-	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io")" && clear
+	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | jq ".link")" && clear
 	echo -e "${Red}$upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
  База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
@@ -259,7 +259,7 @@ showlink(){
 		done
 		client=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep "^V" | cut -d '=' -f 2 | sed -n "$client_number"p)
 		echo
-		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io")"
+		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | jq ".link")"
 		clear
 		echo -e "${Red}$linktofile${Font_color_suffix} - ${Blue}Ссылка на ключ $client${Font_color_suffix}" && echo
 		read -e -p "Хотите продолжить вывод ссылок на ключи?[Y/n]:" delyn
@@ -531,7 +531,7 @@ LimitNPROC=infinity" > /etc/systemd/system/openvpn-server@server.service.d/disab
 	fi
 	if [[ "$os" = "debian" || "$os" = "ubuntu" ]]; then
 		apt-get update
-		apt-get install -y openvpn openssl ca-certificates $firewall
+		apt-get install -y jq openvpn openssl ca-certificates $firewall
 	elif [[ "$os" = "centos" ]]; then
 		yum install -y epel-release
 		yum install -y openvpn openssl ca-certificates tar $firewall
