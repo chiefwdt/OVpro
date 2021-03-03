@@ -259,9 +259,9 @@ showlink(){
 		done
 		client=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep "^V" | cut -d '=' -f 2 | sed -n "$client_number"p)
 		echo
-		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 135-170)"
+		linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io")"
 		clear
-		echo -e "${Red} $linktofile${Font_color_suffix} - ${Blue}Ссылка на ключ $client${Font_color_suffix}" && echo
+		echo -e "${Red}$linktofile${Font_color_suffix} - ${Blue}Ссылка на ключ $client${Font_color_suffix}" && echo
 		read -e -p "Хотите продолжить вывод ссылок на ключи?[Y/n]:" delyn
 		[[ -z ${delyn} ]] && delyn="y"
 		if [[ ${delyn} == [Nn] ]]; then
