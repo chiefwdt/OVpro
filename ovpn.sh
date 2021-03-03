@@ -87,9 +87,10 @@ adduser(){
 	cd /etc/openvpn/server/easy-rsa/
 	EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full "$client" nopass
 	# Generates the custom client.ovpn
+	clear
 	new_client
 	echo
-  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 126-155)"
+  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 133-160)"
 	echo "--------------------------------"
 	echo "-------------------------"
 	echo "----------------"
