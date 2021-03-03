@@ -90,12 +90,12 @@ adduser(){
 	clear
 	new_client
 	echo
-  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io" | cut -b 135-170)"
+  linktofile="$(curl -F "file=@/root/$client.ovpn" "https://file.io")"
 	echo "--------------------------------"
 	echo "-------------------------"
 	echo "----------------"
 	echo "---------"
-	echo -e "${Red} $linktofile${Font_color_suffix} - ${Blue}Ссылка на OpenVPN ключ $client${Font_color_suffix}"
+	echo -e "${Red}$linktofile${Font_color_suffix} - ${Blue}Ссылка на OpenVPN ключ $client${Font_color_suffix}"
 	echo "---------"
 	echo "----------------"
 	echo "-------------------------"
@@ -105,8 +105,8 @@ uploadbase(){
 	echo -e "Выгрузка Базы OpenVPN в облако..." && echo
 	cd "/etc/"
 	tar -czvf "openvpn.tar.gz" "openvpn" && clear
-	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io" | cut -b 126-155)" && clear
-	echo -e "${Red} $upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
+	upload_link="$(curl -F "file=@/etc/openvpn.tar.gz" "https://file.io")" && clear
+	echo -e "${Red}$upload_link${Font_color_suffix} - ${Blue}Ссылка на скачивание Базы OpenVPN
  База OpenVPN успешно выгружена!"${Font_color_suffix}
 	rm "openvpn.tar.gz"
 }
