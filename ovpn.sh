@@ -761,6 +761,7 @@ verb 3" > /etc/openvpn/server/client-common.txt
 	echo "Установка завершена!"
 	echo "Для добавления клиентов, перезапустите скрипт"
 else
+        domainofserver=$(cat /etc/openvpn/server/client-common.txt | sed -n 4p | cut -d ' ' -f 2)
 	serverip123="$(curl "ifconfig.me")"
 	number_of_clients=$(tail -n +2 /etc/openvpn/server/easy-rsa/pki/index.txt | grep -c "^V")
 	number_of_active=$(cat /etc/openvpn/server/openvpn-status.log | grep CLIENT_LIST | tail -n +2 | grep -c CLIENT_LIST)
@@ -773,6 +774,7 @@ echo -e "Приветствую, администратор сервера! Да
 echo -e "Всего подключенных пользователей:" ${Blue}$number_of_active${Font_color_suffix}
   echo -e "
 IP сервера: ${Blue}$serverip123${Font_color_suffix}
+Ты на сервере: ${Blue}$domainofserver${Font_color_suffix}
 ${Blue}|————————————————————————————————————|${Font_color_suffix}
 |${Blue}————————${Font_color_suffix} Управление ключами ${Blue}————————${Font_color_suffix}|
 |${Blue}1.${Font_color_suffix} ${Yellow}Создать ключ${Font_color_suffix}                     |
