@@ -792,7 +792,7 @@ ${Blue}|————————————————————————
 |${Blue}10.${Font_color_suffix} ${Yellow}Настроить автоудаление${Font_color_suffix}          |
 ${Blue}|————————————————————————————————————|${Font_color_suffix}"
 	read -p "Действие: " option
-	until [[ "$option" =~ ^[1-10]+$ ]]; do
+	until [[ "$option" =~ ^[0-9]+$ ]]; do
 		echo "$option: Выбор неверный"
 		read -p "Действие: " option
 	done
